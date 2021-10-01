@@ -1,0 +1,4 @@
+Spiderman,estreno,150000,1,M,1,T
+Free Guy,estreno,100000,2,M,2,T
+Transformers,liberada,50000,3,M
+Arcane,estreno,204675,3,T
