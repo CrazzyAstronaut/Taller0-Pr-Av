@@ -1,4 +1,5 @@
 package Dominio;
+
 /**
  * @author Vicente Rojas
  * @author Claudio Cortes 
@@ -11,11 +12,11 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Main {
-/**
- * 
- * @param args
- * @throws Exception
- */
+	/**
+	 * 
+	 * @param args
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception {
 
 		String infoClientes[][] = new String[9999][4];
@@ -39,7 +40,7 @@ public class Main {
 		pMovilidad = leerStatus(pMovilidad, infoClientes, contadorClientes);
 		leerPeliculas(infoCartelera_A, infoCartelera_B);
 		contadorClientes = menu(M1, M2, M3, T1, T2, T3, cantBoletos, iBoletos, saldos, pMovilidad, infoClientes,
-				contadorClientes, rutSimple, recaudadoDiario, infoCartelera_A, infoCartelera_B);
+		contadorClientes, rutSimple, recaudadoDiario, infoCartelera_A, infoCartelera_B);
 		System.out.println("Cerrando el sistema, guardando...");
 		Save1(infoClientes, contadorClientes, saldos);
 		Save2(infoClientes, contadorClientes, pMovilidad);
@@ -49,7 +50,9 @@ public class Main {
 
 	// RF1
 	/**
-	 * This function reads the text file "customers.txt" and saves the customer information in a matrix and vectors
+	 * This function reads the text file "customers.txt" and saves the customer
+	 * information in a matrix and vectors
+	 * 
 	 * @param MatrizIC
 	 * @param VectorRS
 	 * @param VectorS
@@ -73,7 +76,7 @@ public class Main {
 			String rut = partes[2];
 			MatrizIC[contador][2] = rut;
 
-			String rutS = getRutSimplificado(rut);
+			String rutS = getrutSimpleimplificado(rut);
 			VectorRS[contador] = rutS;
 
 			String contraseña = partes[3];
@@ -87,15 +90,18 @@ public class Main {
 		arch.close();
 		return contador;
 	}
+
 	/**
-	 * This function reads the text file "status.txt" and saves the information of the mobility pass of each client in a boolean vector
+	 * This function reads the text file "status.txt" and saves the information of
+	 * the mobility pass of each client in a boolean vector
+	 * 
 	 * @param VectorPM
 	 * @param MatrizIC
-	 * @param CantCliente
+	 * @param contadorClientes
 	 * @return
 	 * @throws FileNotFoundException
 	 */
-	public static boolean[] leerStatus(boolean VectorPM[], String MatrizIC[][], int CantCliente)
+	public static boolean[] leerStatus(boolean VectorPM[], String MatrizIC[][], int contadorClientes)
 			throws FileNotFoundException {
 		File file = new File("status.txt");
 		Scanner arch = new Scanner(file);
@@ -104,7 +110,7 @@ public class Main {
 			String partes[] = line.split(",");
 			String rut = partes[0];
 			String estado = partes[1];
-			int IndexRut = indexM(rut, MatrizIC, CantCliente, 2);
+			int IndexRut = indexM(rut, MatrizIC, contadorClientes, 2);
 			if (estado.equals("HABILITADO")) {
 				VectorPM[IndexRut] = true;
 			}
@@ -115,8 +121,11 @@ public class Main {
 		arch.close();
 		return VectorPM;
 	}
+
 	/**
-	 * This function reads the text file “movies.txt” and saves the information of the movies in arrays
+	 * This function reads the text file “movies.txt” and saves the information of
+	 * the movies in arrays
+	 * 
 	 * @param MatrizIC_A
 	 * @param MatrizIC_B
 	 * @throws FileNotFoundException
@@ -162,7 +171,9 @@ public class Main {
 
 	// RF2
 	/**
-	 * This function shows a menu which is necessary to access the different menus available
+	 * This function shows a menu which is necessary to access the different menus
+	 * available
+	 * 
 	 * @param M1
 	 * @param M2
 	 * @param M3
@@ -175,7 +186,7 @@ public class Main {
 	 * @param pMovilidad
 	 * @param infoClientes
 	 * @param contadorClientes
-	 * @param RutSimple
+	 * @param rutSimpleimple
 	 * @param recaudadoDiario
 	 * @param infoCartelera_A
 	 * @param infoCartelera_B
@@ -183,52 +194,55 @@ public class Main {
 	 */
 	public static int menu(int M1[][], int M2[][], int M3[][], int T1[][], int T2[][], int T3[][], int cantBoletos[],
 			String iBoletos[], int saldos[], boolean pMovilidad[], String infoClientes[][], int contadorClientes,
-			String RutSimple[], int recaudadoDiario[], String infoCartelera_A[][], int infoCartelera_B[][]) {
+			String rutSimpleimple[], int recaudadoDiario[], String infoCartelera_A[][], int infoCartelera_B[][]) {
 		System.out.println("Bienvenido, ingrese una opcion para seguir");
 		String MainOption = ingresarOpcion("Iniciar Sesion", "Registrarse", "Salir", "");
 		while (MainOption.equals("3") == false) {
 			if (MainOption.equals("1")) {
 				System.out.print("Ingrese su rut para iniciar sesión: ");
-				Scanner entrada1 = new Scanner(System.in);
-				String rut = entrada1.nextLine();
-				String rutSim = getRutSimplificado(rut);
-				while (conditionsLog(RutSimple, contadorClientes, rutSim, rut)) {
+				Scanner S0 = new Scanner(System.in);
+				String rut = S0.nextLine();
+				String rutSim = getrutSimpleimplificado(rut);
+				while (conditionsLog(rutSimpleimple, contadorClientes, rutSim, rut)) {
 					System.out.println("Por favor ingrese una opcion valida: ");
-					Scanner entrada02 = new Scanner(System.in);
-					String ruttry = entrada02.nextLine();
-					String rutsimtry = getRutSimplificado(rut);
+					Scanner S1 = new Scanner(System.in);
+					String ruttry = S1.nextLine();
+					String rutsimtry = getrutSimpleimplificado(rut);
 					rut = ruttry;
 					rutSim = rutsimtry;
 					if (rut.equals("3")) {
 					}
 				}
 				if (rut.equals("ADMIN")) {
-					logAdmin(cantBoletos, infoClientes, saldos, iBoletos, contadorClientes, RutSimple, recaudadoDiario,
+					logAdmin(cantBoletos, infoClientes, saldos, iBoletos, contadorClientes, rutSimpleimple, recaudadoDiario,
 							infoCartelera_A, infoCartelera_B);
 				}
-				if (index(RutSimple, contadorClientes, rutSim) != -1) {
-					int indexUsuario = index(RutSimple, contadorClientes, rutSim);
-					logUsuario(recaudadoDiario, cantBoletos, pMovilidad, iBoletos, indexUsuario, infoClientes,
+				if (index(rutSimpleimple, contadorClientes, rutSim) != -1) {
+					int indexClientesuario = index(rutSimpleimple, contadorClientes, rutSim);
+					logUsuario(recaudadoDiario, cantBoletos, pMovilidad, iBoletos, indexClientesuario, infoClientes,
 							infoCartelera_B, infoCartelera_A, saldos, M1, M2, M3, T1, T2, T3);
 				}
 			}
 			if (MainOption.equals("2")) {
-				RegisterRut(contadorClientes, RutSimple, infoClientes, RutSimple, pMovilidad);
+				RegisterRut(contadorClientes, rutSimpleimple, infoClientes, rutSimpleimple, pMovilidad);
 				contadorClientes++;
 			}
 			MainOption = ingresarOpcion("Iniciar Sesion", "Registrarse", "Salir", "");
 		}
 		return contadorClientes;
 	}
+
 	/**
-	 * This function registers a new user asking for personal data in order to save it in the matrix and vectors
-	 * @param CRuts
-	 * @param RutsS
+	 * This function registers a new user asking for personal data in order to save
+	 * it in the matrix and vectors
+	 * 
+	 * @param contadorClientes
+	 * @param rutSimple
 	 * @param InfoP_A
 	 * @param Ruts
 	 * @param pMovilidad
 	 */
-	public static void RegisterRut(int CRuts, String RutsS[], String InfoP_A[][], String Ruts[], boolean pMovilidad[]) {
+	public static void RegisterRut(int contadorClientes, String rutSimple[], String InfoP_A[][], String Ruts[], boolean pMovilidad[]) {
 		System.out.print("Ingresa tu nombre: ");
 		Scanner S1 = new Scanner(System.in);
 		String nombre = S1.nextLine();
@@ -238,8 +252,8 @@ public class Main {
 		System.out.print("Ingresa tu rut (Con . y -) (Ejemplo:XX.XXX.XXX-X): ");
 		Scanner S3 = new Scanner(System.in);
 		String rut = S3.nextLine();
-		String RutSim = getRutSimplificado(rut);
-		while (ConditionsRegisterUsu(rut, Ruts, CRuts, RutSim) == false) {
+		String rutSimpleim = getrutSimpleimplificado(rut);
+		while (ConditionsRegisterUsu(rut, Ruts, contadorClientes, rutSimpleim) == false) {
 			System.out.print("Por favor intentelo denuevo: ");
 			Scanner S3T = new Scanner(System.in);
 			String ruttry = S3T.nextLine();
@@ -269,24 +283,26 @@ public class Main {
 		} else {
 			estado = false;
 		}
-		InfoP_A[CRuts][0] = nombre;
-		InfoP_A[CRuts][1] = apellido;
-		InfoP_A[CRuts][2] = rut;
-		InfoP_A[CRuts][3] = contraseña;
-		pMovilidad[CRuts] = estado;
-		RutsS[CRuts] = RutSim;
+		InfoP_A[contadorClientes][0] = nombre;
+		InfoP_A[contadorClientes][1] = apellido;
+		InfoP_A[contadorClientes][2] = rut;
+		InfoP_A[contadorClientes][3] = contraseña;
+		pMovilidad[contadorClientes] = estado;
+		rutSimple[contadorClientes] = rutSimpleim;
 		return;
-	}	
-	
+	}
+
 	// RF3
 	/**
-	 * This function shows the options that a client registered in the program can choose
+	 * This function shows the options that a client registered in the program can
+	 * choose
+	 * 
 	 * @param recaudadoDiario
 	 * @param cantBoletos
 	 * @param pMovilidad
 	 * @param iBoletos
-	 * @param IndexU
-	 * @param InfoCliente
+	 * @param indexCliente
+	 * @param infoCliente
 	 * @param infoCartelera_B
 	 * @param infoCartelera_A
 	 * @param saldos
@@ -298,13 +314,13 @@ public class Main {
 	 * @param T3
 	 */
 	public static void logUsuario(int recaudadoDiario[], int cantBoletos[], boolean pMovilidad[], String iBoletos[],
-			int IndexU, String InfoCliente[][], int infoCartelera_B[][], String infoCartelera_A[][], int saldos[],
+			int indexCliente, String infoCliente[][], int infoCartelera_B[][], String infoCartelera_A[][], int saldos[],
 			int M1[][], int M2[][], int M3[][], int T1[][], int T2[][], int T3[][]) {
 		String option;
 		System.out.print("Ingrese su contraseña (3 para salir): ");
 		Scanner S1 = new Scanner(System.in);
 		String contraseña = S1.nextLine();
-		while (InfoCliente[IndexU][3].equals(contraseña) == false && contraseña.equals("3") == false) {
+		while (infoCliente[indexCliente][3].equals(contraseña) == false && contraseña.equals("3") == false) {
 			System.out.print("Contraseña incorrecta, intentelo denuevo: ");
 			Scanner S1T = new Scanner(System.in);
 			String P = S1T.nextLine();
@@ -314,21 +330,21 @@ public class Main {
 			System.out.println("Volviendo al menu...");
 			return;
 		} else {
-			System.out.println("Bienvenido " + InfoCliente[IndexU][0] + " " + InfoCliente[IndexU][1]);
+			System.out.println("Bienvenido " + infoCliente[indexCliente][0] + " " + infoCliente[indexCliente][1]);
 			option = ingresarOpcion("Comprar entrada", "Información usuario", "Devolución", "Cartelera");
 		}
 		while (option.equals("5") == false) {
 			if (option.equals("1")) {
-				comprarEntrada(recaudadoDiario, iBoletos, cantBoletos, saldos, pMovilidad, IndexU, infoCartelera_A,
+				comprarEntrada(recaudadoDiario, iBoletos, cantBoletos, saldos, pMovilidad, indexCliente, infoCartelera_A,
 						infoCartelera_B, M1, M2, M3, T1, T2, T3);
 			}
 			if (option.equals("2")) {
-				desplegarInformacion(cantBoletos, infoCartelera_B, infoCartelera_A, InfoCliente, IndexU, saldos,
+				desplegarInformacion(cantBoletos, infoCartelera_B, infoCartelera_A, infoCliente, indexCliente, saldos,
 						iBoletos);
 			}
 			if (option.equals("3")) {
 				devolucionBoletos(recaudadoDiario, saldos, pMovilidad, cantBoletos, infoCartelera_B, infoCartelera_A,
-						iBoletos, IndexU, M1, M2, M3, T1, T2, T3);
+						iBoletos, indexCliente, M1, M2, M3, T1, T2, T3);
 			}
 			if (option.equals("4")) {
 				desplegarCartelera(infoCartelera_A, infoCartelera_B);
@@ -337,16 +353,19 @@ public class Main {
 		}
 		return;
 	}
+
 	/**
-	 * This function searches for the room and function that the customer wants to buy
+	 * This function searches for the room and function that the customer wants to
+	 * buy
+	 * 
 	 * @param recaudadoDiario
 	 * @param iBoletos
 	 * @param cantBoletos
 	 * @param saldos
 	 * @param pMovilidad
-	 * @param IndexU
-	 * @param InfoCartelera_A
-	 * @param InfoCartelera_B
+	 * @param indexCliente
+	 * @param infoCartelera_A
+	 * @param infoCartelera_B
 	 * @param M1
 	 * @param M2
 	 * @param M3
@@ -355,12 +374,12 @@ public class Main {
 	 * @param T3
 	 */
 	public static void comprarEntrada(int recaudadoDiario[], String iBoletos[], int cantBoletos[], int saldos[],
-			boolean pMovilidad[], int IndexU, String InfoCartelera_A[][], int InfoCartelera_B[][], int M1[][],
+			boolean pMovilidad[], int indexCliente, String infoCartelera_A[][], int infoCartelera_B[][], int M1[][],
 			int M2[][], int M3[][], int T1[][], int T2[][], int T3[][]) {
 		System.out.println("Ingrese el nombre de la pelicula: ");
 		Scanner S0 = new Scanner(System.in);
 		String pelicula = S0.nextLine();
-		while (indexM(pelicula, InfoCartelera_A, 5, 0) == -1 && pelicula.equals("3") == false) {
+		while (indexM(pelicula, infoCartelera_A, 5, 0) == -1 && pelicula.equals("3") == false) {
 			System.out.print("Ingrese el nombre de la pelicula nuevamente: ");
 			Scanner S0T = new Scanner(System.in);
 			String P = S0T.nextLine();
@@ -373,7 +392,7 @@ public class Main {
 		Scanner S1 = new Scanner(System.in);
 		String horario = S0.nextLine();
 
-		while (buscarFuncion(pelicula, horario, InfoCartelera_A) == -1 && horario.equals("3") == false) {
+		while (buscarFuncion(pelicula, horario, infoCartelera_A) == -1 && horario.equals("3") == false) {
 			System.out.print("Ingrese un horario valido(M o T): ");
 			Scanner S1T = new Scanner(System.in);
 			String P = S1T.nextLine();
@@ -382,17 +401,20 @@ public class Main {
 		if (horario.equals("3")) {
 			return;
 		}
-		int IndexFuncion = buscarFuncion(pelicula, horario, InfoCartelera_A);
-		String codigo = InfoCartelera_A[IndexFuncion][3];
+		int indexFuncion = buscarFuncion(pelicula, horario, infoCartelera_A);
+		String codigo = infoCartelera_A[indexFuncion][3];
 		if (darSala(codigo, M1, M2, M3, T1, T2, T3) == null) {
 			return;
 		}
 		int Sala[][] = darSala(codigo, M1, M2, M3, T1, T2, T3);
-		elegirAsiento(M1, M2, M3, T1, T2, T3, recaudadoDiario, iBoletos, cantBoletos, codigo, saldos, IndexFuncion,
-				InfoCartelera_A, InfoCartelera_B, IndexU, Sala, pMovilidad);
+		elegirAsiento(M1, M2, M3, T1, T2, T3, recaudadoDiario, iBoletos, cantBoletos, codigo, saldos, indexFuncion,
+				infoCartelera_A, infoCartelera_B, indexCliente, Sala, pMovilidad);
 	}
+
 	/**
-	 * This function is in charge of giving the customer the option of choosing the seats they want to buy for the function
+	 * This function is in charge of giving the customer the option of choosing the
+	 * seats they want to buy for the function
+	 * 
 	 * @param M1
 	 * @param M2
 	 * @param M3
@@ -404,16 +426,16 @@ public class Main {
 	 * @param cantBoletos
 	 * @param codigo
 	 * @param saldos
-	 * @param IndexFuncion
-	 * @param InfoCar_A
-	 * @param InfoCar_B
+	 * @param indexFuncion
+	 * @param infoCartelera_A
+	 * @param infoCartelera_B
 	 * @param indexCliente
 	 * @param Sala
 	 * @param pMovilidad
 	 */
 	public static void elegirAsiento(int M1[][], int M2[][], int M3[][], int T1[][], int T2[][], int T3[][],
-			int recaudadoDiario[], String iBoletos[], int cantBoletos[], String codigo, int saldos[], int IndexFuncion,
-			String InfoCar_A[][], int InfoCar_B[][], int indexCliente, int Sala[][], boolean pMovilidad[]) {
+			int recaudadoDiario[], String iBoletos[], int cantBoletos[], String codigo, int saldos[], int indexFuncion,
+			String infoCartelera_A[][], int infoCartelera_B[][], int indexCliente, int Sala[][], boolean pMovilidad[]) {
 		boolean repetir = true;
 		int totalPagar = 0;
 		String Boleto = iBoletos[indexCliente];
@@ -461,7 +483,7 @@ public class Main {
 			int indexF = indexFila(fila);
 			int indexC = indexColumna(columna);
 			Sala = asignarAsiento(indexCliente, Sala, indexC, indexF);
-			totalPagar += calcularPago(indexCliente, IndexFuncion, InfoCar_A, pMovilidad);
+			totalPagar += calcularPago(indexCliente, indexFuncion, infoCartelera_A, pMovilidad);
 			Boleto = crearBoletos(Boleto, fila, columna, codigo, cantBoletos, indexCliente);
 			System.out.println("Costo: " + totalPagar);
 			System.out.println("¿Desea agregar otra compra? (Y o N)");
@@ -518,40 +540,46 @@ public class Main {
 		}
 		System.out.println("Procesando pago... ");
 		saldos[indexCliente] -= totalPagar;
-		recaudadoDiario[IndexFuncion] += totalPagar;
+		recaudadoDiario[indexFuncion] += totalPagar;
 		iBoletos[indexCliente] = Boleto;
 		guardarSala(Sala, codigo, M1, M2, M3, T1, T2, T3);
-		calcularAsientoDisponibles(Sala, InfoCar_B, IndexFuncion);
+		calcularAsientoDisponibles(Sala, infoCartelera_B, indexFuncion);
 		System.out.println("Pago realizado, volviendo al menú");
 	}
+
 	/**
-	 * This function shows on the screen all the information of the "rut" that is entered by parameter
+	 * This function shows on the screen all the information of the "rut" that is
+	 * entered by parameter
+	 * 
 	 * @param cantBoletos
-	 * @param InfoCartelera_B
-	 * @param InfoCartelera_A
-	 * @param InfoCliente
-	 * @param IndexU
+	 * @param infoCartelera_B
+	 * @param infoCartelera_A
+	 * @param infoCliente
+	 * @param indexCliente
 	 * @param saldos
 	 * @param iBoletos
 	 */
-	public static void desplegarInformacion(int cantBoletos[], int InfoCartelera_B[][], String InfoCartelera_A[][],
-			String InfoCliente[][], int IndexU, int saldos[], String iBoletos[]) {
-		System.out.println("Rut: " + InfoCliente[IndexU][2] + "	Nombre: " + InfoCliente[IndexU][0] + "	Apellido: "
-				+ InfoCliente[IndexU][1]);
-		System.out.println("Saldo: $" + saldos[IndexU]);
-		desplegarBoletos(cantBoletos, InfoCartelera_B, InfoCartelera_A, iBoletos, IndexU);
+	public static void desplegarInformacion(int cantBoletos[], int infoCartelera_B[][], String infoCartelera_A[][],
+			String infoCliente[][], int indexCliente, int saldos[], String iBoletos[]) {
+		System.out.println("Rut: " + infoCliente[indexCliente][2] + "	Nombre: " + infoCliente[indexCliente][0] + "	Apellido: "
+				+ infoCliente[indexCliente][1]);
+		System.out.println("Saldo: $" + saldos[indexCliente]);
+		desplegarBoletos(cantBoletos, infoCartelera_B, infoCartelera_A, iBoletos, indexCliente);
 
 	}
+
 	/**
-	 * This function will return a part of the money from the ticket purchases that the user has made and will make those seats available
+	 * This function will return a part of the money from the ticket purchases that
+	 * the user has made and will make those seats available
+	 * 
 	 * @param recaudadoDiario
 	 * @param saldos
 	 * @param pMovilidad
 	 * @param cantBoletos
-	 * @param InfoCartelera_B
-	 * @param InfoCartelera_A
+	 * @param infoCartelera_B
+	 * @param infoCartelera_A
 	 * @param iBoletos
-	 * @param IndexU
+	 * @param indexCliente
 	 * @param M1
 	 * @param M2
 	 * @param M3
@@ -560,19 +588,19 @@ public class Main {
 	 * @param T3
 	 */
 	public static void devolucionBoletos(int recaudadoDiario[], int saldos[], boolean pMovilidad[], int cantBoletos[],
-			int InfoCartelera_B[][], String InfoCartelera_A[][], String iBoletos[], int IndexU, int M1[][], int M2[][],
+			int infoCartelera_B[][], String infoCartelera_A[][], String iBoletos[], int indexCliente, int M1[][], int M2[][],
 			int M3[][], int T1[][], int T2[][], int T3[][]) {
-		desplegarBoletos(cantBoletos, InfoCartelera_B, InfoCartelera_A, iBoletos, IndexU);
-		if (cantBoletos[IndexU] == 0) {
+		desplegarBoletos(cantBoletos, infoCartelera_B, infoCartelera_A, iBoletos, indexCliente);
+		if (cantBoletos[indexCliente] == 0) {
 			return;
 		}
-		String vectorBoletos[] = crearVectorBoletos(cantBoletos, iBoletos, IndexU);
+		String vectorBoletos[] = crearVectorBoletos(cantBoletos, iBoletos, indexCliente);
 		int devolucion = 0;
-		int newCant = cantBoletos[IndexU];
+		int newCant = cantBoletos[indexCliente];
 		System.out.println("Ingrese el nombre de la pelicula de la que desea la devolución: ");
 		Scanner S0 = new Scanner(System.in);
 		String pelicula = S0.nextLine();
-		while (indexM(pelicula, InfoCartelera_A, 5, 0) == -1 && pelicula.equals("3") == false) {
+		while (indexM(pelicula, infoCartelera_A, 5, 0) == -1 && pelicula.equals("3") == false) {
 			System.out.print("Ingrese el nombre de la pelicula nuevamente: ");
 			Scanner S0T = new Scanner(System.in);
 			String P = S0T.nextLine();
@@ -585,7 +613,7 @@ public class Main {
 		Scanner S1 = new Scanner(System.in);
 		String horario = S1.nextLine();
 
-		while (buscarFuncion(pelicula, horario, InfoCartelera_A) == -1 && horario.equals("3") == false) {
+		while (buscarFuncion(pelicula, horario, infoCartelera_A) == -1 && horario.equals("3") == false) {
 			System.out.print("Ingrese un horario valido(M o T): ");
 			Scanner S1T = new Scanner(System.in);
 			String P = S1T.nextLine();
@@ -594,13 +622,13 @@ public class Main {
 		if (horario.equals("3")) {
 			return;
 		}
-		int IndexFuncion = buscarFuncion(pelicula, horario, InfoCartelera_A);
-		String codigo = InfoCartelera_A[IndexFuncion][3];
+		int indexFuncion = buscarFuncion(pelicula, horario, infoCartelera_A);
+		String codigo = infoCartelera_A[indexFuncion][3];
 		if (darSala(codigo, M1, M2, M3, T1, T2, T3) == null) {
 			return;
 		}
 		int Sala[][] = darSala(codigo, M1, M2, M3, T1, T2, T3);
-		int cantidadAS = comprobarCantAsientosSala(Sala, IndexU);
+		int cantidadAS = comprobarCantAsientosSala(Sala, indexCliente);
 		if (cantidadAS == 0) {
 			System.out.print("Usted no tiene ningun asiento para esta función, regresando al menú ...");
 			return;
@@ -635,31 +663,34 @@ public class Main {
 				System.out.print("Ingrese el codigo del asiento que desea la devolucion: ");
 				Scanner S3 = new Scanner(System.in);
 				String codigoDel = S3.nextLine();
-				while (index(vectorBoletos, cantBoletos[IndexU], codigoDel) == -1) {
+				while (index(vectorBoletos, cantBoletos[indexCliente], codigoDel) == -1) {
 					System.out.print("Codigo invalido, intentelo denuevo: ");
 					Scanner S3T = new Scanner(System.in);
 					String CD = S3T.nextLine();
 					codigoDel = CD;
 				}
-				String partesBoletoDel[] = vectorBoletos[index(vectorBoletos, cantBoletos[IndexU], codigoDel)]
+				String partesBoletoDel[] = vectorBoletos[index(vectorBoletos, cantBoletos[indexCliente], codigoDel)]
 						.split("-");
 				Sala = desasignarAsiento(Sala, indexColumna(partesBoletoDel[3]), indexFila(partesBoletoDel[2]));
-				vectorBoletos[index(vectorBoletos, cantBoletos[IndexU], codigoDel)] = "";
-				devolucion += devolucionDinero(IndexFuncion, InfoCartelera_A, pMovilidad, IndexU);
+				vectorBoletos[index(vectorBoletos, cantBoletos[indexCliente], codigoDel)] = "";
+				devolucion += devolucionDinero(indexFuncion, infoCartelera_A, pMovilidad, indexCliente);
 				newCant--;
 			}
-			saldos[IndexU] += devolucion;
-			recaudadoDiario[IndexFuncion] -= devolucion;
-			iBoletos[IndexU] = darBoleto(vectorBoletos, cantBoletos, IndexU);
-			cantBoletos[IndexU] = newCant;
+			saldos[indexCliente] += devolucion;
+			recaudadoDiario[indexFuncion] -= devolucion;
+			iBoletos[indexCliente] = darBoleto(vectorBoletos, cantBoletos, indexCliente);
+			cantBoletos[indexCliente] = newCant;
 			guardarSala(Sala, codigo, M1, M2, M3, T1, T2, T3);
 			System.out.println("La devolucion se ha hecho con exito. Monto devuelto: " + devolucion
-					+ "	Su nuevo saldo es: " + saldos[IndexU]);
+					+ "	Su nuevo saldo es: " + saldos[indexCliente]);
 			return;
 		}
 	}
+
 	/**
-	 * This function will show all the functions with their respective available seats. 
+	 * This function will show all the functions with their respective available
+	 * seats.
+	 * 
 	 * @param infoCartelera_A
 	 * @param infoCartelera_B
 	 */
@@ -680,18 +711,19 @@ public class Main {
 	// RF4
 	/**
 	 * This function is necessary to access the administrator options
+	 * 
 	 * @param cantBoletos
-	 * @param InfoCliente
+	 * @param infoCliente
 	 * @param saldos
 	 * @param iBoletos
 	 * @param contadorClientes
-	 * @param RutSimple
+	 * @param rutSimpleimple
 	 * @param recaudadoDiario
 	 * @param infoCartelera_A
 	 * @param infoCartelera_B
 	 */
-	public static void logAdmin(int cantBoletos[], String InfoCliente[][], int saldos[], String iBoletos[],
-			int contadorClientes, String RutSimple[], int recaudadoDiario[], String infoCartelera_A[][],
+	public static void logAdmin(int cantBoletos[], String infoCliente[][], int saldos[], String iBoletos[],
+			int contadorClientes, String rutSimpleimple[], int recaudadoDiario[], String infoCartelera_A[][],
 			int infoCartelera_B[][]) {
 		System.out.print("Ingrese la contraseña: ");
 		Scanner S0 = new Scanner(System.in);
@@ -708,26 +740,28 @@ public class Main {
 		}
 		if (AdminOption) {
 			System.out.println("Bienvenido al menu de Administrador");
-			while (optionAdmin(cantBoletos, InfoCliente, saldos, iBoletos, contadorClientes, RutSimple, recaudadoDiario,
+			while (optionAdmin(cantBoletos, infoCliente, saldos, iBoletos, contadorClientes, rutSimpleimple, recaudadoDiario,
 					infoCartelera_A, infoCartelera_B)) {
 			}
 		}
 	}
+
 	/**
 	 * This function will show all the options available in administrator mode.
+	 * 
 	 * @param cantBoletos
-	 * @param InfoCliente
+	 * @param infoCliente
 	 * @param saldos
 	 * @param iBoletos
 	 * @param contadorClientes
-	 * @param RutSimple
+	 * @param rutSimpleimple
 	 * @param recaudadoDiario
 	 * @param infoCartelera_A
 	 * @param infoCartelera_B
 	 * @return
 	 */
-	public static boolean optionAdmin(int cantBoletos[], String InfoCliente[][], int saldos[], String iBoletos[],
-			int contadorClientes, String RutSimple[], int recaudadoDiario[], String infoCartelera_A[][],
+	public static boolean optionAdmin(int cantBoletos[], String infoCliente[][], int saldos[], String iBoletos[],
+			int contadorClientes, String rutSimpleimple[], int recaudadoDiario[], String infoCartelera_A[][],
 			int infoCartelera_B[][]) {
 		System.out.println("¿Que accion quiere realizar?");
 		String option = ingresarOpcion("Ver Taquilla", "Buscar Cliente", "Salir", "");
@@ -752,14 +786,14 @@ public class Main {
 		}
 		if (option.equals("2")) {
 			System.out.print("Ingrese el rut del cliente (ADMIN o 3 para volver): ");
-			Scanner entrada1 = new Scanner(System.in);
-			String rut = entrada1.nextLine();
-			String rutSim = getRutSimplificado(rut);
-			while (conditionsLog(RutSimple, contadorClientes, rutSim, rut)) {
+			Scanner S0 = new Scanner(System.in);
+			String rut = S0.nextLine();
+			String rutSim = getrutSimpleimplificado(rut);
+			while (conditionsLog(rutSimpleimple, contadorClientes, rutSim, rut)) {
 				System.out.println("Por favor ingrese una opcion valida: ");
-				Scanner entrada02 = new Scanner(System.in);
-				String ruttry = entrada02.nextLine();
-				String rutsimtry = getRutSimplificado(rut);
+				Scanner S1 = new Scanner(System.in);
+				String ruttry = S1.nextLine();
+				String rutsimtry = getrutSimpleimplificado(rut);
 				rut = ruttry;
 				rutSim = rutsimtry;
 				if (rut.equals("3")) {
@@ -770,8 +804,8 @@ public class Main {
 				}
 
 			}
-			int IndexU = index(RutSimple, contadorClientes, rutSim);
-			desplegarInformacion(cantBoletos, infoCartelera_B, infoCartelera_A, InfoCliente, IndexU, saldos, iBoletos);
+			int indexCliente = index(rutSimpleimple, contadorClientes, rutSim);
+			desplegarInformacion(cantBoletos, infoCartelera_B, infoCartelera_A, infoCliente, indexCliente, saldos, iBoletos);
 			return true;
 		}
 		return false;
@@ -779,7 +813,9 @@ public class Main {
 
 	// RF5
 	/**
-	 * This function will save the customer data and overwrite the new information in the text file "customers.txt".
+	 * This function will save the customer data and overwrite the new information
+	 * in the text file "customers.txt".
+	 * 
 	 * @param infoClientes
 	 * @param contadorClientes
 	 * @param saldos
@@ -794,8 +830,12 @@ public class Main {
 		}
 		escritura.close();
 	}
+
 	/**
-	 * This function will be in charge of saving the customer data regarding the mobility pass and overwriting the new information in the text file "status.txt"
+	 * This function will be in charge of saving the customer data regarding the
+	 * mobility pass and overwriting the new information in the text file
+	 * "status.txt"
+	 * 
 	 * @param infoCliente
 	 * @param contadorClientes
 	 * @param pMovilidad
@@ -815,8 +855,11 @@ public class Main {
 		}
 		escritura.close();
 	}
+
 	/**
-	 * This function will be in charge of saving the data of the functions and overwriting the new information in the text file "movies.txt"
+	 * This function will be in charge of saving the data of the functions and
+	 * overwriting the new information in the text file "movies.txt"
+	 * 
 	 * @param infoCartelera_A
 	 * @param infoCartelera_B
 	 * @param recaudadoDiario
@@ -845,11 +888,12 @@ public class Main {
 	// FUNCIONES GEBERALES
 	/**
 	 * This function calculates the seats available in a room
+	 * 
 	 * @param Sala
 	 * @param infoCartelera_B
-	 * @param IndexFuncion
+	 * @param indexFuncion
 	 */
-	public static void calcularAsientoDisponibles(int Sala[][], int infoCartelera_B[][], int IndexFuncion) {
+	public static void calcularAsientoDisponibles(int Sala[][], int infoCartelera_B[][], int indexFuncion) {
 		int cant = 0;
 		for (int i = 0; i < 30; i++) {
 			for (int j = 0; j < 10; j++) {
@@ -858,28 +902,32 @@ public class Main {
 				}
 			}
 		}
-		infoCartelera_B[IndexFuncion][2] = cant;
+		infoCartelera_B[indexFuncion][2] = cant;
 	}
+
 	/**
 	 * This function create a vector with the tickets of the client
+	 * 
 	 * @param cantBoletos
 	 * @param iBoletos
-	 * @param IndexU
+	 * @param indexCliente
 	 * @return
 	 */
-	public static String[] crearVectorBoletos(int cantBoletos[], String iBoletos[], int IndexU) {
+	public static String[] crearVectorBoletos(int cantBoletos[], String iBoletos[], int indexCliente) {
 		String InventarioBoletos[];
-		if (cantBoletos[IndexU] == 1) {
+		if (cantBoletos[indexCliente] == 1) {
 			InventarioBoletos = new String[1];
-			InventarioBoletos[0] = iBoletos[IndexU];
+			InventarioBoletos[0] = iBoletos[indexCliente];
 			return InventarioBoletos;
 		} else {
-			InventarioBoletos = iBoletos[IndexU].split(",");
+			InventarioBoletos = iBoletos[indexCliente].split(",");
 			return InventarioBoletos;
 		}
 	}
+
 	/**
-	 * This function takes care of marking the seats as occupied 
+	 * This function takes care of marking the seats as occupied
+	 * 
 	 * @param Sala
 	 * @param x
 	 * @param y
@@ -934,18 +982,21 @@ public class Main {
 		}
 		return Sala;
 	}
+
 	/**
-	 * This function returns a String that is going to be placed in the inventory of the client
+	 * This function returns a String that is going to be placed in the inventory of
+	 * the client
+	 * 
 	 * @param vectorBoletos
 	 * @param cantBoletos
-	 * @param IndexU
+	 * @param indexCliente
 	 * @return
 	 */
-	public static String darBoleto(String vectorBoletos[], int cantBoletos[], int IndexU) {
+	public static String darBoleto(String vectorBoletos[], int cantBoletos[], int indexCliente) {
 		String boleto = "";
 		int cant = 0;
 		boolean first = true;
-		for (int i = 0; i < cantBoletos[IndexU]; i++) {
+		for (int i = 0; i < cantBoletos[indexCliente]; i++) {
 			if (cant != 0 && vectorBoletos[i] != "" && first == false) {
 				boleto = boleto + "," + vectorBoletos[i];
 				cant++;
@@ -958,24 +1009,26 @@ public class Main {
 		}
 		return boleto;
 	}
+
 	/**
 	 * This function return the cash of a seat
+	 * 
 	 * @param indexFuncion
-	 * @param InfoCartelera_A
+	 * @param infoCartelera_A
 	 * @param pMovilidad
-	 * @param IndexU
+	 * @param indexCliente
 	 * @return
 	 */
-	public static int devolucionDinero(int indexFuncion, String InfoCartelera_A[][], boolean pMovilidad[], int IndexU) {
-		if (InfoCartelera_A[indexFuncion][1].equals("estreno")) {
-			if (pMovilidad[IndexU] = true) {
+	public static int devolucionDinero(int indexFuncion, String infoCartelera_A[][], boolean pMovilidad[], int indexCliente) {
+		if (infoCartelera_A[indexFuncion][1].equals("estreno")) {
+			if (pMovilidad[indexCliente] = true) {
 				return 3780;
 			} else {
 				return 4400;
 			}
 		}
-		if (InfoCartelera_A[indexFuncion][1].equals("estreno")) {
-			if (pMovilidad[IndexU] = true) {
+		if (infoCartelera_A[indexFuncion][1].equals("estreno")) {
+			if (pMovilidad[indexCliente] = true) {
 				return 2720;
 			} else {
 				return 3200;
@@ -983,8 +1036,11 @@ public class Main {
 		}
 		return 0;
 	}
+
 	/**
-	 * This function returns a vector with the tickets of the client that are linked to the function
+	 * This function returns a vector with the tickets of the client that are linked
+	 * to the function
+	 * 
 	 * @param vectorB
 	 * @param codigo
 	 * @return
@@ -1009,62 +1065,68 @@ public class Main {
 		}
 		return vectorBSala;
 	}
+
 	/**
 	 * This function returns the seats available in a room
+	 * 
 	 * @param Sala
-	 * @param IndexU
+	 * @param indexCliente
 	 * @return
 	 */
-	public static int comprobarCantAsientosSala(int Sala[][], int IndexU) {
+	public static int comprobarCantAsientosSala(int Sala[][], int indexCliente) {
 		int cant = 0;
 		for (int j = 0; j <= 9; j++) {
 			for (int i = 0; i <= 29; i++) {
-				if (Sala[i][j] == IndexU) {
+				if (Sala[i][j] == indexCliente) {
 					cant++;
 				}
 			}
 		}
 		return cant;
 	}
+
 	/**
 	 * This function deploys all the tickets of a client
+	 * 
 	 * @param cantBoletos
-	 * @param InfoCartelera_B
-	 * @param InfoCartelera_A
+	 * @param infoCartelera_B
+	 * @param infoCartelera_A
 	 * @param iBoletos
-	 * @param IndexU
+	 * @param indexCliente
 	 */
-	public static void desplegarBoletos(int cantBoletos[], int InfoCartelera_B[][], String InfoCartelera_A[][],
-			String iBoletos[], int IndexU) {
-		String inventarioPeliculas = iBoletos[IndexU];
+	public static void desplegarBoletos(int cantBoletos[], int infoCartelera_B[][], String infoCartelera_A[][],
+			String iBoletos[], int indexCliente) {
+		String inventarioPeliculas = iBoletos[indexCliente];
 		int IndexP;
-		if (cantBoletos[IndexU] == 0) {
+		if (cantBoletos[indexCliente] == 0) {
 			System.out.println("No tiene boletos para ninguna funcion");
 			return;
 		}
-		if (cantBoletos[IndexU] == 1) {
-			System.out.println("Cantidad de boletos: " + cantBoletos[IndexU]);
+		if (cantBoletos[indexCliente] == 1) {
+			System.out.println("Cantidad de boletos: " + cantBoletos[indexCliente]);
 			String partesP[] = inventarioPeliculas.split("-");
 			String codigo = partesP[1] + partesP[0];
-			IndexP = indexM(codigo, InfoCartelera_A, 5, 3);
-			System.out.println("	- " + InfoCartelera_A[IndexP][0] + "		N° Sala: " + InfoCartelera_B[IndexP][1]
-					+ "		Horario: " + InfoCartelera_A[IndexP][2]);
+			IndexP = indexM(codigo, infoCartelera_A, 5, 3);
+			System.out.println("	- " + infoCartelera_A[IndexP][0] + "		N° Sala: " + infoCartelera_B[IndexP][1]
+					+ "		Horario: " + infoCartelera_A[IndexP][2]);
 			System.out.println("	Fila: " + partesP[2] + "		Columna: " + partesP[3]);
 			return;
 		}
-		System.out.println("Cantidad de boletos: " + cantBoletos[IndexU]);
+		System.out.println("Cantidad de boletos: " + cantBoletos[indexCliente]);
 		String peliculas[] = inventarioPeliculas.split(",");
 		for (int i = 0; i < peliculas.length; i++) {
 			String partesP[] = peliculas[i].split("-");
 			String codigo = partesP[1] + partesP[0];
-			IndexP = indexM(codigo, InfoCartelera_A, 5, 3);
-			System.out.println("	- " + InfoCartelera_A[IndexP][0] + "		N° Sala: " + InfoCartelera_B[IndexP][1]
-					+ "		Horario: " + InfoCartelera_A[IndexP][2]);
+			IndexP = indexM(codigo, infoCartelera_A, 5, 3);
+			System.out.println("	- " + infoCartelera_A[IndexP][0] + "		N° Sala: " + infoCartelera_B[IndexP][1]
+					+ "		Horario: " + infoCartelera_A[IndexP][2]);
 			System.out.println("	Fila: " + partesP[2] + "		Columna: " + partesP[3]);
 		}
 	}
+
 	/**
 	 * This function checks if a string can be a number
+	 * 
 	 * @param numero
 	 * @return
 	 */
@@ -1081,8 +1143,10 @@ public class Main {
 		}
 		return true;
 	}
+
 	/**
 	 * This function save the changes of the room
+	 * 
 	 * @param Sala
 	 * @param codigo
 	 * @param M1
@@ -1114,8 +1178,10 @@ public class Main {
 		}
 		return;
 	}
+
 	/**
 	 * This function create a String with the tickets of a client
+	 * 
 	 * @param Boleto
 	 * @param fila
 	 * @param columna
@@ -1137,24 +1203,26 @@ public class Main {
 			return Boleto + "," + N_Sala + "-" + horario + "-" + fila + "-" + columna;
 		}
 	}
+
 	/**
 	 * This function return the cash that needs to be paid for ticket
-	 * @param IndexU
-	 * @param IndexFuncion
-	 * @param InfoCar_A
+	 * 
+	 * @param indexCliente
+	 * @param indexFuncion
+	 * @param infoCartelera_A
 	 * @param pMovilidad
 	 * @return
 	 */
-	public static int calcularPago(int IndexU, int IndexFuncion, String InfoCar_A[][], boolean pMovilidad[]) {
-		if (InfoCar_A[IndexFuncion][1].equalsIgnoreCase("estreno")) {
-			if (pMovilidad[IndexU]) {
+	public static int calcularPago(int indexCliente, int indexFuncion, String infoCartelera_A[][], boolean pMovilidad[]) {
+		if (infoCartelera_A[indexFuncion][1].equalsIgnoreCase("estreno")) {
+			if (pMovilidad[indexCliente]) {
 				return 4675;
 			} else {
 				return 5500;
 			}
 		}
-		if (InfoCar_A[IndexFuncion][1].equalsIgnoreCase("liberada")) {
-			if (pMovilidad[IndexU]) {
+		if (infoCartelera_A[indexFuncion][1].equalsIgnoreCase("liberada")) {
+			if (pMovilidad[indexCliente]) {
 				return 3400;
 			} else {
 				return 4000;
@@ -1162,8 +1230,10 @@ public class Main {
 		}
 		return 0;
 	}
+
 	/**
 	 * This function assigns the seats to be occupied by the client
+	 * 
 	 * @param indexCliente
 	 * @param Sala
 	 * @param x
@@ -1217,8 +1287,10 @@ public class Main {
 		}
 		return Sala;
 	}
+
 	/**
 	 * This function return a index
+	 * 
 	 * @param Fila
 	 * @return
 	 */
@@ -1255,8 +1327,10 @@ public class Main {
 		}
 		return -1;
 	}
+
 	/**
 	 * This function return a index
+	 * 
 	 * @param columna
 	 * @return
 	 */
@@ -1353,8 +1427,10 @@ public class Main {
 		}
 		return -1;
 	}
+
 	/**
 	 * This function returns the matrix of a room
+	 * 
 	 * @param codigo
 	 * @param M1
 	 * @param M2
@@ -1386,8 +1462,10 @@ public class Main {
 		}
 		return null;
 	}
+
 	/**
 	 * This function return the index of a function
+	 * 
 	 * @param pelicula
 	 * @param horario
 	 * @param MatrizInfCar_A
@@ -1401,31 +1479,35 @@ public class Main {
 		}
 		return -1;
 	}
+
 	/**
 	 * This function verify if a rut is well written
+	 * 
 	 * @param rut
 	 * @param Ruts
-	 * @param CRuts
-	 * @param RutSim
+	 * @param contadorClientes
+	 * @param rutSimpleim
 	 * @return
 	 */
-	public static boolean ConditionsRegisterUsu(String rut, String Ruts[], int CRuts, String RutSim) {
+	public static boolean ConditionsRegisterUsu(String rut, String Ruts[], int contadorClientes, String rutSimpleim) {
 		if (CorrectRut(rut) == false) {
 			System.out.println("Por favor ingrese el rut correctamente");
 			return false;
 		}
-		if ((index(Ruts, CRuts, RutSim) != -1)) {
+		if ((index(Ruts, contadorClientes, rutSimpleim) != -1)) {
 			System.out.println("Este rut ya esta registrado");
 			return false;
 		}
-		if (RutSim.equals("ADMIN")) {
+		if (rutSimpleim.equals("ADMIN")) {
 			System.out.println("Rut invalido");
 			return false;
 		}
 		return true;
 	}
+
 	/**
 	 * This function verify if a rut is well written with the dots and commas
+	 * 
 	 * @param Rut
 	 * @return
 	 */
@@ -1443,8 +1525,10 @@ public class Main {
 		}
 		return false;
 	}
+
 	/**
 	 * This function gives options for the menu
+	 * 
 	 * @param A
 	 * @param B
 	 * @param C
@@ -1487,8 +1571,10 @@ public class Main {
 		}
 		return MainOption;
 	}
+
 	/**
 	 * This function creates the matrix of a room
+	 * 
 	 * @return
 	 */
 	public static int[][] crearSala() {
@@ -1511,8 +1597,10 @@ public class Main {
 		}
 		return Sala;
 	}
+
 	/**
 	 * This function print the matrix of a room
+	 * 
 	 * @param Sala
 	 */
 	public static void printSala(int Sala[][]) {
@@ -1540,18 +1628,22 @@ public class Main {
 				.println("==========================================================================================");
 
 	}
+
 	/**
-	 * This function returns a simplified rut 
+	 * This function returns a simplified rut
+	 * 
 	 * @param Rut
 	 * @return
 	 */
-	public static String getRutSimplificado(String Rut) {
+	public static String getrutSimpleimplificado(String Rut) {
 		Rut = Rut.replace(".", "");
 		Rut = Rut.replace("-", "");
 		return Rut;
 	}
+
 	/**
 	 * This function returns the index of a matrix
+	 * 
 	 * @param dato
 	 * @param Matriz
 	 * @param cant
@@ -1566,16 +1658,18 @@ public class Main {
 		}
 		return -1;
 	}
+
 	/**
 	 * This function creates the conditions to log in
-	 * @param RutsS
-	 * @param CRuts
+	 * 
+	 * @param rutSimple
+	 * @param contadorClientes
 	 * @param rutSim
 	 * @param rut
 	 * @return
 	 */
-	public static boolean conditionsLog(String RutsS[], int CRuts, String rutSim, String rut) {
-		if (index(RutsS, CRuts, rutSim) != -1) {
+	public static boolean conditionsLog(String rutSimple[], int contadorClientes, String rutSim, String rut) {
+		if (index(rutSimple, contadorClientes, rutSim) != -1) {
 			return false;
 		}
 		if (rut.equals("ADMIN")) {
@@ -1583,8 +1677,10 @@ public class Main {
 		}
 		return true;
 	}
+
 	/**
 	 * This function returns the index of a vector2
+	 * 
 	 * @param lista
 	 * @param contador
 	 * @param dato
